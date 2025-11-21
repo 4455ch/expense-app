@@ -322,19 +322,46 @@ export default function Dashboard() {
             </button>
           </div>
 
+
           {/* --- ส่วนที่ 2: Filter + ปุ่ม Logout (สำหรับ Desktop) --- */}
-          <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-            <div className="flex items-center gap-2 bg-gray-50 p-2 rounded border border-gray-200 w-full md:w-auto justify-center">
-              <span className="text-sm font-bold text-gray-700">ช่วงวันที่:</span>
-              <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900" />
-              <span className="text-gray-500">-</span>
-              <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900" />
+          {/* --- ส่วนที่ 2: Filter + ปุ่ม Logout (สำหรับ Desktop) --- */}
+          <div className="flex flex-col md:flex-row items-center gap-2 lg:gap-4 w-full md:w-auto mt-4 md:mt-0">
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 bg-gray-50 p-2 rounded border border-gray-200 w-full md:w-auto">
+              {/* Label */}
+              <span className="text-sm font-bold text-gray-700 whitespace-nowrap">ช่วงวันที่:</span>
+
+              {/* Group Inputs */}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={e => setStartDate(e.target.value)}
+                  className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900 flex-1 sm:flex-none min-w-0"
+                />
+                <span className="text-gray-500">-</span>
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={e => setEndDate(e.target.value)}
+                  className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900 flex-1 sm:flex-none min-w-0"
+                />
+              </div>
             </div>
 
-            {/* ปุ่ม Desktop: ซ่อนบนจอเล็ก (hidden), แสดงบนจอใหญ่แบบ flex (md:flex) */}
-            <button onClick={handleLogout} className="hidden md:flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded hover:bg-red-100 transition-colors text-sm font-bold">
-              <LogOut size={16} /> ออกจากระบบ
+            {/* ปุ่ม Desktop: แก้ไขตรงนี้ */}
+            <button
+              onClick={handleLogout}
+              // 1. ปรับ padding (px) ให้เล็กลงในจอ md และใหญ่ขึ้นในจอ lg
+              // 2. whitespace-nowrap เพื่อกันปุ่มแตกบรรทัด
+              className="hidden md:flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 px-3 lg:px-4 py-2 rounded hover:bg-red-100 transition-colors text-sm font-bold whitespace-nowrap"
+              title="ออกจากระบบ"
+            >
+              <LogOut size={16} />
+              {/* 3. ซ่อนข้อความเมื่ออยู่จอ md (แสดงแค่ไอคอน) และแสดงข้อความเมื่อจอ lg ขึ้นไป */}
+              <span className="hidden lg:inline">ออกจากระบบ</span>
             </button>
+
           </div>
 
         </div>
@@ -352,14 +379,7 @@ export default function Dashboard() {
             </button>
           ))}
 
-          {activeTab !== 'overall' && (
-            <button
-              onClick={() => setShowCategoryModal(true)}
-              className="absolute right-2 top-2 bg-gray-100 text-gray-700 p-2 rounded hover:bg-gray-200 flex items-center gap-1 text-xs font-bold border border-gray-300"
-            >
-              <Settings size={14} /> จัดการหมวดหมู่
-            </button>
-          )}
+
         </div>
 
         {/* GRID LAYOUT */}
@@ -370,18 +390,27 @@ export default function Dashboard() {
 
             {activeTab === 'overall' && (
               <>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-white p-5 rounded-lg shadow border-l-4 border-green-500">
-                    <p className="text-sm text-gray-600 font-medium">รายรับรวม</p>
-                    <p className="text-xl font-black text-green-600">+{summary.income.toLocaleString()}</p>
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                  {/* 1. รายรับ */}
+                  <div className="bg-white p-2 sm:p-5 rounded-lg shadow border-l-2 sm:border-l-4 border-green-500 flex flex-col justify-between">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium truncate">รายรับรวม</p>
+                    <p className="text-sm sm:text-xl font-black text-green-600 truncate">
+                      +{summary.income.toLocaleString()}
+                    </p>
                   </div>
-                  <div className="bg-white p-5 rounded-lg shadow border-l-4 border-red-500">
-                    <p className="text-sm text-gray-600 font-medium">รายจ่ายรวม</p>
-                    <p className="text-xl font-black text-red-600">-{summary.expense.toLocaleString()}</p>
+
+                  {/* 2. รายจ่าย */}
+                  <div className="bg-white p-2 sm:p-5 rounded-lg shadow border-l-2 sm:border-l-4 border-red-500 flex flex-col justify-between">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium truncate">รายจ่ายรวม</p>
+                    <p className="text-sm sm:text-xl font-black text-red-600 truncate">
+                      -{summary.expense.toLocaleString()}
+                    </p>
                   </div>
-                  <div className="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
-                    <p className="text-sm text-gray-600 font-medium">คงเหลือ</p>
-                    <p className={`text-xl font-black ${balance >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+
+                  {/* 3. คงเหลือ */}
+                  <div className="bg-white p-2 sm:p-5 rounded-lg shadow border-l-2 sm:border-l-4 border-blue-500 flex flex-col justify-between">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium truncate">คงเหลือ</p>
+                    <p className={`text-sm sm:text-xl font-black truncate ${balance >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
                       {balance.toLocaleString()}
                     </p>
                   </div>
