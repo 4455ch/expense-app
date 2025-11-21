@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Finance Dashboard (Expense Tracker) 💰
+https://expense-7fh2uau17-4455s-projects-10a0b412.vercel.app/
 
-## Getting Started
+เว็บแอปพลิเคชันสำหรับบันทึกและบริหารจัดการรายรับ-รายจ่ายส่วนบุคคล พัฒนาโดยเน้นความรวดเร็วในการใช้งาน (Performance) และการแสดงผลข้อมูลที่เข้าใจง่าย (Data Visualization) รองรับการใช้งานทั้งบนมือถือและคอมพิวเตอร์
 
-First, run the development server:
+## Features (ฟีเจอร์หลัก)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. Authentication & Security
+- **Hybrid Login:** รองรับการเข้าสู่ระบบทั้งแบบ Email/Password และ **Google OAuth**
+- **Data Privacy:** ใช้ Row Level Security (RLS) ของ Supabase ข้อมูลของผู้ใช้แต่ละคนจะถูกแยกออกจากกันอย่างปลอดภัย
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Dashboard & Visualization
+- **Interactive Charts:** แสดงผลข้อมูลด้วยกราฟวงกลม (Pie Chart) สำหรับสัดส่วนหมวดหมู่ และกราฟแท่ง (Bar Chart) สำหรับเปรียบเทียบรายรับ-รายจ่ายรายเดือน (ใช้ library `recharts`)
+- **Smart Filtering:** สามารถเลือกดูข้อมูลตามช่วงเวลา (Start Date - End Date) ได้ตามต้องการ
+- **Tab System:** แยกมุมมองเป็น 3 ส่วนชัดเจน: ภาพรวม (Overall), รายจ่าย (Expense), และ รายรับ (Income)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Transaction Management
+- **CRUD Operations:** สามารถเพิ่ม และ ลบรายการบันทึกได้
+- **Validation:** มีระบบตรวจสอบความถูกต้อง เช่น ป้องกันการใส่ยอดเงินติดลบ หรือ แจ้งเตือนเมื่อบันทึกวันที่ในอนาคต
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Category Customization
+- **Manage Categories:** ผู้ใช้สามารถ เพิ่ม, แก้ไข, และลบหมวดหมู่ (Category) ได้ด้วยตนเองผ่าน Modal
+- **Default Data:** ระบบจะสร้างหมวดหมู่พื้นฐานให้ทันทีเมื่อเริ่มใช้งานครั้งแรก
 
-## Learn More
+### 5. Responsive Design
+- **Mobile-First:** ออกแบบ Layout ให้เหมาะสมกับการใช้งานบนมือถือ (ซ่อนปุ่มข้อความแสดงแค่ Icon, ปรับ Input วันที่ให้เป็นแนวตั้ง)
+- **Adaptive UI:** ปรับเปลี่ยนการจัดวาง (Grid Layout) อัตโนมัติตามขนาดหน้าจอ
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend:** [Next.js 14](https://nextjs.org/) (App Router), React
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Backend & Database:** [Supabase](https://supabase.com/) (PostgreSQL, Auth)
+- **Charts:** [Recharts](https://recharts.org/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Database Schema (Supabase)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+โปรเจกต์นี้ใช้ตารางหลัก 2 ตารางใน PostgreSQL:
+
+### 1. `transactions` (เก็บรายการบันทึก)
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary Key |
+| `title` | Text | ชื่อรายการ |
+| `amount` | Numeric | จำนวนเงิน |
+| `category` | Text | หมวดหมู่ |
+| `type` | Text | 'income' หรือ 'expense' |
+| `date` | Date | วันที่บันทึก |
+| `user_id` | UUID | Foreign Key (auth.users) |
+
+### 2. `categories` (เก็บหมวดหมู่)
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary Key |
+| `name` | Text | ชื่อหมวดหมู่ |
+| `type` | Text | 'income' หรือ 'expense' |
+| `user_id` | UUID | Foreign Key (auth.users) |
+
+---

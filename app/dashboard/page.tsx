@@ -103,6 +103,7 @@ export default function Dashboard() {
       setForm(prev => ({ ...prev, category: validCats[0].name }))
     }
   }, [categories, form.type])
+  
 
 
   // --- ACTIONS: TRANSACTIONS ---
