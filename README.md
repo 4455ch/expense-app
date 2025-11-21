@@ -5,6 +5,8 @@ https://expense-7fh2uau17-4455s-projects-10a0b412.vercel.app/
 
 ## Features (ฟีเจอร์หลัก)
 
+
+
 ### 1. Authentication & Security
 - **Hybrid Login:** รองรับการเข้าสู่ระบบทั้งแบบ Email/Password และ **Google OAuth**
 - **Data Privacy:** ใช้ Row Level Security (RLS) ของ Supabase ข้อมูลของผู้ใช้แต่ละคนจะถูกแยกออกจากกันอย่างปลอดภัย
@@ -13,6 +15,8 @@ https://expense-7fh2uau17-4455s-projects-10a0b412.vercel.app/
 - **Interactive Charts:** แสดงผลข้อมูลด้วยกราฟวงกลม (Pie Chart) สำหรับสัดส่วนหมวดหมู่ และกราฟแท่ง (Bar Chart) สำหรับเปรียบเทียบรายรับ-รายจ่ายรายเดือน (ใช้ library `recharts`)
 - **Smart Filtering:** สามารถเลือกดูข้อมูลตามช่วงเวลา (Start Date - End Date) ได้ตามต้องการ
 - **Tab System:** แยกมุมมองเป็น 3 ส่วนชัดเจน: ภาพรวม (Overall), รายจ่าย (Expense), และ รายรับ (Income)
+
+
 
 ### 3. Transaction Management
 - **CRUD Operations:** สามารถเพิ่ม และ ลบรายการบันทึกได้
@@ -25,6 +29,8 @@ https://expense-7fh2uau17-4455s-projects-10a0b412.vercel.app/
 ### 5. Responsive Design
 - **Mobile-First:** ออกแบบ Layout ให้เหมาะสมกับการใช้งานบนมือถือ (ซ่อนปุ่มข้อความแสดงแค่ Icon, ปรับ Input วันที่ให้เป็นแนวตั้ง)
 - **Adaptive UI:** ปรับเปลี่ยนการจัดวาง (Grid Layout) อัตโนมัติตามขนาดหน้าจอ
+
+
 
 ---
 
