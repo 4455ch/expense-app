@@ -218,7 +218,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8 font-sans relative">
 
-      {/* 🔥 1. ALERT MODAL UI */}
+      {/*  1. ALERT MODAL UI */}
       {alertModal.isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60]">
           <div className="bg-white p-6 rounded-2xl w-full max-w-sm shadow-2xl transform transition-all scale-100 animate-in fade-in zoom-in duration-200">
@@ -241,7 +241,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* 🔥 2. CONFIRM MODAL UI */}
+      {/*  2. CONFIRM MODAL UI */}
       {confirmModal.isOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60]">
           <div className="bg-white p-6 rounded-2xl w-full max-w-sm shadow-2xl transform transition-all scale-100 animate-in fade-in zoom-in duration-200">
@@ -307,19 +307,36 @@ export default function Dashboard() {
 
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 bg-white p-4 rounded-lg shadow-sm">
-          <h1 className="text-2xl font-extrabold text-gray-900">Dashboard การเงิน</h1>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-gray-50 p-2 rounded border border-gray-200">
+          {/* --- ส่วนที่ 1: หัวข้อ + ปุ่ม Logout (สำหรับมือถือ) --- */}
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <h1 className="text-2xl font-extrabold text-gray-900">Dashboard การเงิน</h1>
+
+            {/* ปุ่ม Mobile: แสดงเฉพาะจอเล็ก (md:hidden) */}
+            <button
+              onClick={handleLogout}
+              className="md:hidden text-red-600 p-2 bg-red-50 rounded-full border border-red-100 active:scale-95 transition-transform"
+              title="ออกจากระบบ"
+            >
+              <LogOut size={20} />
+            </button>
+          </div>
+
+          {/* --- ส่วนที่ 2: Filter + ปุ่ม Logout (สำหรับ Desktop) --- */}
+          <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+            <div className="flex items-center gap-2 bg-gray-50 p-2 rounded border border-gray-200 w-full md:w-auto justify-center">
               <span className="text-sm font-bold text-gray-700">ช่วงวันที่:</span>
               <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900" />
               <span className="text-gray-500">-</span>
               <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="bg-white border border-gray-300 rounded px-2 py-1 text-sm text-gray-900" />
             </div>
-            <button onClick={handleLogout} className="flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded hover:bg-red-100 transition-colors text-sm font-bold">
+
+            {/* ปุ่ม Desktop: ซ่อนบนจอเล็ก (hidden), แสดงบนจอใหญ่แบบ flex (md:flex) */}
+            <button onClick={handleLogout} className="hidden md:flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded hover:bg-red-100 transition-colors text-sm font-bold">
               <LogOut size={16} /> ออกจากระบบ
             </button>
           </div>
+
         </div>
 
         {/* Tabs */}
